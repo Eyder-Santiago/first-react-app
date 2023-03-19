@@ -1,25 +1,60 @@
 //import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { OrbitControls, Center} from "@react-three/drei";
 
+import { useFrame } from "@react-three/fiber";
+//import { click } from "@testing-library/user-event/dist/click";
+import { useRef } from "react";
+//import { RingGeometry } from "three";
+//import { Group } from "three";
 export function Experience(){
 
+    // const {camera, gl} = useThree()
+    
+    //dirección de la luz <directionalLight>
+    //El elemento obsoleto center (centro) <Cent crea una caja en bloque con el contenido centrado. 
     const boxRef = useRef();
-
-    useFrame((state, delta) => {
-        boxRef.current.rotation.x += 1 * delta;
+    const conoRef = useRef();
+    // const sphereRef = useRef()
+    // const groupRef = useRef(new Group())
+    
+    useFrame((state, delta)=>{
+        boxRef.current.rotation.x += 1 * delta  ;
+        conoRef.current.rotation.z += 1 * delta  ;
     })
-
-    return<>
-        <mesh ref={boxRef} position={[0, -3, 0]}>
-            <boxGeometry></boxGeometry>
-            <meshBasicMaterial color={"mediumpurple"}></meshBasicMaterial>
-        </mesh>
-        <mesh> position={[1, 5, 5]}
-            <coneGeometry></coneGeometry>
-            <meshBasicMaterial color={"yellow"}></meshBasicMaterial>
-        </mesh>
+    
+    // dirección de la luz <directionalLight>
+    return <>
+        <OrbitControls
+            enableRotate = {true}
+            minDistance = {4}
+            maxDistance = {8}
+            makeDefault = {false}
+            enableDamping
+            enablePan={false}
+            screenSpacePanning={false}
+        />
+        <ambientLight/>
+        
+        <directionalLight position={[10, 3, 3]} intensity={1.5} />
+        <Center >
+            <mesh ref={boxRef}>
+                <boxGeometry args={[1, 1, 1]}/>
+                <meshStandardMaterial color={"mediumpurple"}/>
+            </mesh>
+            <mesh ref={conoRef} position-z = {-3}>
+                <coneGeometry></coneGeometry>
+                <meshStandardMaterial color={"yellow"}></meshStandardMaterial>
+            </mesh>
+            <mesh position-z = {3} >
+                <sphereGeometry args={[1, 32, 64]}/>
+                <meshStandardMaterial color={"mediumpurple"}/>
+            </mesh>
+            <mesh rotation-x={-Math.PI / 2} position-y={-1}>
+                <planeGeometry args={[100, 100]} />
+                <meshStandardMaterial color={"green"} />
+            </mesh>
+        </Center>
     </>
     
-}
     
+}
