@@ -10,7 +10,7 @@ import { Experience } from './Experience';
 //const root = ReactDOM.createRoot(document.getElementById('root'));
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
-  <Canvas>
+  <Canvas onContextMenu={(e) => e.preventDefault()}>
       <Experience></Experience>
   </Canvas>
 );

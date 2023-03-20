@@ -1,5 +1,5 @@
 //import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { OrbitControls, Center} from "@react-three/drei";
+import { OrbitControls, Center, useTexture} from "@react-three/drei";
 
 import { useFrame } from "@react-three/fiber";
 //import { click } from "@testing-library/user-event/dist/click";
@@ -14,6 +14,7 @@ export function Experience(){
     //El elemento obsoleto center (centro) <Cent crea una caja en bloque con el contenido centrado. 
     const boxRef = useRef();
     const conoRef = useRef();
+    const colorTexture = useTexture('./esferaWood.jpg');
     // const sphereRef = useRef()
     // const groupRef = useRef(new Group())
     
@@ -34,7 +35,7 @@ export function Experience(){
             screenSpacePanning={false}
         />
         <ambientLight/>
-        
+        <directionalLight color="#ffffff" intensity={-1.1} position={[0, 10, 0]}/>
         <directionalLight position={[10, 3, 3]} intensity={1.5} />
         <Center >
             <mesh ref={boxRef}>
@@ -47,11 +48,11 @@ export function Experience(){
             </mesh>
             <mesh position-z = {3} >
                 <sphereGeometry args={[1, 32, 64]}/>
-                <meshStandardMaterial color={"mediumpurple"}/>
+                <meshStandardMaterial color={"mediumpurple"} map={colorTexture}/>
             </mesh>
             <mesh rotation-x={-Math.PI / 2} position-y={-1}>
                 <planeGeometry args={[100, 100]} />
-                <meshStandardMaterial color={"green"} />
+                <meshStandardMaterial color={"green"}/>
             </mesh>
         </Center>
     </>
